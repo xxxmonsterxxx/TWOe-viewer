@@ -2,9 +2,9 @@
 #include "geometry/sphere.h"
 #include "geometry/cylinder.h"
 
-const std::vector<Atom::atomInfo> Atom::atomInfos = { {"H", {0,0,1}, 1},
-												 	  {"O", {0,1,0}, 8} };
-
+const std::vector<Atom::atomInfo> Atom::atomInfos = {	{"H", {0,0,1}, 1},
+												 	  	{"O", {0,1,0}, 8},
+													  	{"C", {0,1,0}, 6}	};
 
 
 Mesh* Unit::_sphereMesh = nullptr;

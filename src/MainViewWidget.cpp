@@ -1,4 +1,5 @@
 #include "widgets/MainViewWidget.h"
+#include "DataLoader.h"
 
 MainViewWidget* MainViewWidget::singleton = nullptr;
 
@@ -25,37 +26,24 @@ void MainViewWidget::init(SGE* engine)
 
 bool MainViewWidget::loadMolekule()
 {
-	// here we create molekule
-	std::string file = getExecutablePath() + "/Resources/input.txt";
+	std::string wfnPath = getExecutablePath() + "/Resources/Test data/test.wfn";
+	std::string cptPath = getExecutablePath() + "/Resources/Test data/test.cp";
 
-	// if (!file.open())
-	// 	return false;
+	DataLoader::loadData(wfnPath, cptPath);
 
-	int atomsNum = 0;
-	int linksNum = 0;
-
-	// if (atomsNum == 0 || linksNum == 0)
-	// 	return false;
-
-	std::vector<Atom> atoms;
-	for (int i = 0; i < atomsNum; i++) {
-		std::string name;
-		Atom atom = Atom::createNewAtomInstance(name);
-		SGEPosition newPos;
-		atom.setPosition(newPos);
-		atoms.push_back(atom);
-	}
+	if (DataLoader::_atoms.empty() /*|| linksNum == 0*/)
+		return false;
 
 	std::vector<MolekularLink> links;
-	for (int i = 0; i < linksNum; i++) {
-		glm::vec3 begin;
-		glm::vec3 end;
-		MolekularLink link = MolekularLink::createNewLinkInstance(begin,end);
-		SGEPosition newPos;
-		links.push_back(link);
-	}
+	// for (int i = 0; i < linksNum; i++) {
+	// 	glm::vec3 begin;
+	// 	glm::vec3 end;
+	// 	MolekularLink link = MolekularLink::createNewLinkInstance(begin,end);
+	// 	SGEPosition newPos;
+	// 	links.push_back(link);
+	// }
 
-	_molekule = new Molekule(atoms,links);	
+	_molekule = new Molekule(DataLoader::_atoms,links);	
 
 	addMolekuleToRender();
 
@@ -64,8 +52,9 @@ bool MainViewWidget::loadMolekule()
 
 void MainViewWidget::addMolekuleToRender()
 {
-	for (size_t i = 0; i < _molekule->_gameObjects.size(); i++)
+	for (size_t i = 0; i < _molekule->_gameObjects.size(); i++) {
 		_engine->addToRender(_molekule->_gameObjects[i]);
+	}
 }
 
 void MainViewWidget::update()

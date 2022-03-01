@@ -1,0 +1,25 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio directory
+.vs/
+
+# CMake system
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Apple cache
+*.DS_Store
+
+# MakeFile
+Makefile

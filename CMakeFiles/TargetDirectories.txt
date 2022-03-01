@@ -1,3 +1,0 @@
-/Users/michael-pro/repos/TWOe-viewer/CMakeFiles/rebuild_cache.dir
-/Users/michael-pro/repos/TWOe-viewer/CMakeFiles/edit_cache.dir
-/Users/michael-pro/repos/TWOe-viewer/CMakeFiles/TWOe-viewer.dir

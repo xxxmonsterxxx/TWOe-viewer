@@ -32,15 +32,14 @@ public:
 	} _info;
 
 	static Atom createNewAtomInstance(std::string name) {
-		_number++;
-		return Atom(name);
+		return Atom(name,_number++);
 	}
 
 	void setPosition(SGEPosition newPos) { _position = newPos; }
 
 	GameObject initGameObject() override {
-		GameObject newGO("Atom" + _info.name + std::to_string(_number), *_sphereMesh);
-		_position.z = -30;
+		GameObject newGO("Atom" + _info.name + std::to_string(_num), *_sphereMesh);
+		_position.z = -15;
 		newGO.setPosition(_position);
 		newGO.setColor(_info.color);
 		newGO.setScale(_info.radius);
@@ -51,11 +50,14 @@ public:
 
 private:
 
-	Atom(std::string name) {
+	Atom(std::string name, uint8_t num) {
+		_num = num;
 		findAtomInfo(name);
 	}
 
-	static uint16_t _number;
+	static uint16_t _number; //count of atoms
+
+	uint16_t _num; // number of atom
 
 	void findAtomInfo(std::string name) {
 		for (size_t i = 0; i < atomInfos.size(); i++)

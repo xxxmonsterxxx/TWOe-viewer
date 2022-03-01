@@ -14,9 +14,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 
 include_directories(include)
 
-# file(GLOB SOURCES	src/main.cpp
-# 					src/TwoeViewer.cpp
-# 					src/MainViewWidget.cpp)
 file (GLOB SOURCES src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
