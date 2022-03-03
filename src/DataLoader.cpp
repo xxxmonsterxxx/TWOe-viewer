@@ -56,7 +56,7 @@ void DataLoader::loadData(const std::string wfnPath, const std::string cptPath)
 {
 	std::ifstream inp(wfnPath);
 	if (!inp.is_open()) {
-		std::cout<<wfnPath.c_str()<<" not found :(";
+		std::cout<< "File " <<wfnPath.c_str()<<" not found :(";
 		return;
 	}
 

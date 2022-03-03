@@ -37,7 +37,10 @@ void TwoeViewer::execute()
 	if (!engine.init(800,800,"TWOe-Viewer")) // SGE init
 		return;
 
+	engine.setViewTransition({0,0,-7},0,{0,1,0});
+
 	while(engine.drawNextFrame()) {
+		engine.setViewTransition({0,0,0},0.5,{0,1,0});
 		mainWidget.update();
     }
 }

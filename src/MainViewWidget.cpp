@@ -19,7 +19,7 @@ void MainViewWidget::init(SGE* engine)
 
 	background.setScale(60);
 	background.setPosition({0,0,-50});
-	_engine->addToRender(background);
+	// _engine->addToRender(background);
 
 	Unit::initUnitGeometry();
 }

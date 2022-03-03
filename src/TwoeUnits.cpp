@@ -2,9 +2,13 @@
 #include "geometry/sphere.h"
 #include "geometry/cylinder.h"
 
-const std::vector<Atom::atomInfo> Atom::atomInfos = {	{"H", {0,0,1}, 1},
-												 	  	{"O", {0,1,0}, 8},
-													  	{"C", {0,1,0}, 6}	};
+const std::vector<Atom::atomInfo> Atom::atomInfos = {	
+														{ "H", {  0,  0,  1},  1},
+														{ "O", {  1,  0,  0},  8},
+														{ "C", {  0,  1,  0},  6},
+													  	{"Cl", {  0,  1,  0}, 17},
+														{" N", {  0,  0,  1},  7}
+																					};
 
 
 Mesh* Unit::_sphereMesh = nullptr;
@@ -15,7 +19,7 @@ uint16_t MolekularLink::_number = 0;
 void Unit::initUnitGeometry()
 {
 	static std::vector<SGEPosition> vertices;
-	static std::vector<uint16_t> 	indices;
+	static std::vector<uint16_t>	indices;
 	
 	initVertexDataSphere(vertices, indices);
 	_sphereMesh = new Mesh("Sphere", vertices, indices, false);

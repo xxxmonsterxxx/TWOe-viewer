@@ -39,10 +39,9 @@ public:
 
 	GameObject initGameObject() override {
 		GameObject newGO("Atom" + _info.name + std::to_string(_num), *_sphereMesh);
-		_position.z = -15;
 		newGO.setPosition(_position);
+		newGO.setScale(_info.radius*0.1f);
 		newGO.setColor(_info.color);
-		newGO.setScale(_info.radius);
 		return newGO;
 	}
 
