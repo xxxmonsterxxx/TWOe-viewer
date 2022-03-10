@@ -17,23 +17,6 @@ const int periodic[] = {
 	10, 38,  179, 227, 245
 };
 
-struct atom
-{
-	float pos_x;
-	float pos_y;
-	float pos_z;
-	int charge;
-};
-
-struct bond_cp
-{
-	float pos_x;
-	float pos_y;
-	float pos_z;
-	int a_ind;
-	int b_ind;
-};
-
 class DataLoader {
 public:
 
@@ -41,6 +24,7 @@ public:
 
 	static std::string _molekuleName;
 	static std::vector<Atom> _atoms;
+	static std::vector<MolekularLink> _links;
 
 	// int numberOfBonds;
 	// bond_cp *bonds;
@@ -55,4 +39,6 @@ public:
 
 private:
 	static void readMolekuleName(std::ifstream& inp);
+	static void readAtoms(std::ifstream& inp);
+	static void readBonds(std::ifstream& inp);
 };

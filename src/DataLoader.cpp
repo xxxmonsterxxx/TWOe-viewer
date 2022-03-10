@@ -4,6 +4,7 @@
 
 std::string DataLoader::_molekuleName;
 std::vector<Atom> DataLoader::_atoms;
+std::vector<MolekularLink> DataLoader::_links;
 
 void DataLoader::readMolekuleName(std::ifstream& inp)
 {
@@ -52,16 +53,8 @@ void DataLoader::readMolekuleName(std::ifstream& inp)
 	}
 }
 
-void DataLoader::loadData(const std::string wfnPath, const std::string cptPath)
+void DataLoader::readAtoms(std::ifstream& inp)
 {
-	std::ifstream inp(wfnPath);
-	if (!inp.is_open()) {
-		std::cout<< "File " <<wfnPath.c_str()<<" not found :(";
-		return;
-	}
-
-	// readMolekuleName(inp);
-
 	std::string tmp;
 	std::getline(inp, tmp);
 	int numberOfAtoms;
@@ -78,93 +71,70 @@ void DataLoader::loadData(const std::string wfnPath, const std::string cptPath)
 		newAtom.setPosition({x,y,z});
 		_atoms.push_back(newAtom);
 	}
+}
 
+void DataLoader::readBonds(std::ifstream& inp)
+{
+	uint16_t numOfBonds;
+	std::string tmp;
+
+	while (tmp != "BCPs")
+	{
+		getline(inp, tmp);
+		inp >> tmp >> tmp;
+	}
+	inp >> tmp >> numOfBonds;
+
+	getline(inp, tmp);
+	inp >> tmp >> tmp >> tmp >> tmp;
+	getline(inp, tmp);
+	inp >> tmp >> tmp >> tmp >> tmp;
+
+	while (tmp != "BONDS" && !inp.eof())
+	{
+		getline(inp, tmp);
+		for (int i = 0; i < 4; i++) inp >> tmp;
+	}
+	for (int j = 0; j<3; j++) getline(inp, tmp);
+
+	for (int i = 0; i < numOfBonds; i++)
+	{
+		for (int j = 0; j < 9; j++)
+			inp >> tmp;
+
+		int inda, indb;
+		inp >> inda >> tmp >> indb >> tmp;
+		getline(inp, tmp);
+		float x,y,z;
+		inp >> tmp >> tmp >> x >>
+			   tmp >> tmp >> y >> 
+			   tmp >> tmp >> z;
+		MolekularLink newLink = MolekularLink::createNewLinkInstance(_atoms[inda-1].getPosition(), _atoms[indb-1].getPosition());
+		newLink.setPosition({x,y,z});
+		_links.push_back(newLink);
+
+		for (int j = 0; j < 6; j++)
+			getline(inp, tmp);
+	}
+}
+
+void DataLoader::loadData(const std::string wfnPath, const std::string cptPath)
+{
+	std::ifstream inp(wfnPath);
+	if (!inp.is_open()) {
+		std::cout<< "File " <<wfnPath.c_str()<<" not found :(";
+		return;
+	}
+
+	// readMolekuleName(inp);
+	readAtoms(inp);
 	inp.close();
 
-	// char S;
-	// inp.open(name_cpt);
-
-	// while (tmp != "BCPs")
-	// {
-	// 	getline(inp, tmp);
-	// 	inp >> tmp >> tmp;
-	// }
-	// inp >> tmp >> numberOfBonds;
-	// map = new int*[numberOfBonds];
-
-	// for (int i = 0; i < numberOfBonds; i++)
-	// 	map[i] = new int[2];
-
-	// getline(inp, tmp);
-	// inp >> tmp >> tmp >> tmp >> this->nummberOfRCPs;
-	// getline(inp, tmp);
-	// inp >> tmp >> tmp >> tmp >> this->nummberOfCCPs;
-
-	// while (tmp != "BONDS" && !inp.eof())
-	// {
-	// 	getline(inp, tmp);
-	// 	for (int i = 0; i < 4; i++) inp >> tmp;
-	// }
-	// for (int j = 0; j<3; j++) getline(inp, tmp);
-
-	// bonds = new bond_cp[numberOfBonds];
-
-
-	// for (int i = 0; i < numberOfBonds; i++)
-	// {
-	// 	bond_cp &b = bonds[i];
-	// 	for (int j = 0; j < 9; j++)
-	// 		inp >> tmp;
-	// 	inp >> b.a_ind >> tmp >> b.b_ind >> tmp;
-	// 	getline(inp, tmp);
-	// 	inp >> tmp >> tmp >> b.pos_x >>
-	// 		tmp >> tmp >> b.pos_y >> 
-	// 		tmp >> tmp >> b.pos_z;
-
-	// 	for (int j = 0; j < 6; j++)
-	// 		getline(inp, tmp);
-	// }
-
-	// while (tmp != "RINGS" && !inp.eof())
-	// {
-	// 	getline(inp, tmp);
-	// 	for (int i = 0; i < 4; i++) inp >> tmp;
-	// }
-
-	// for (int j = 0; j < 4; j++) getline(inp, tmp);
-
-	// for (int i = 0; i < this->nummberOfRCPs; i++)
-	// {
-	// 	float x, y, z;
-	// 	inp >> tmp >> tmp >> x
-	// 		>> tmp >> tmp >> y
-	// 		>> tmp >> tmp >> z;
-
-	// 	ring_cp.push_back(glm::vec3(x, y, z));
-
-	// 	for (int j = 0; j < 7; j++)
-	// 		getline(inp, tmp);
-	// }
-
-	// while (tmp != "CAGES" && !inp.eof())
-	// {
-	// 	getline(inp, tmp);
-	// 	for (int i = 0; i < 3; i++) inp >> tmp;
-	// }
-	
-	// for (int j = 0; j < 4; j++) getline(inp, tmp);
-
-
-	// for (int i = 0; i < this->nummberOfCCPs; i++)
-	// {
-	// 	float x, y, z;
-	// 	inp >> tmp >> tmp >> x
-	// 		>> tmp >> tmp >> y
-	// 		>> tmp >> tmp >> z;
-	// 	std::cout << x << y << z;
-	// 	cage_cp.push_back(glm::vec3(x, y, z));
-
-	// 	for (int j = 0; j < 7; j++)
-	// 		getline(inp, tmp);
-	// }
+	inp.open(cptPath);
+	if (!inp.is_open()) {
+		std::cout<< "File " <<cptPath.c_str()<<" not found :(";
+		return;
+	}
+	readBonds(inp);
+	inp.close();
 }

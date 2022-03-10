@@ -29,7 +29,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 set(GLM_INC_DIR modules/glm)
 set(SGR_FOLDER ~/Programming/Library/SGR/0.6.0)
-set(SGE_FOLDER ~/Programming/Library/SGE/0.2.0)
+set(SGE_FOLDER ~/Programming/Library/SGE/0.3.0)
 
 find_library(SGR_LIB SGR ${SGR_FOLDER}/lib/shared/)
 find_library(SGE_LIB SGE ${SGE_FOLDER}/lib/shared/)

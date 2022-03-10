@@ -40,7 +40,7 @@ void TwoeViewer::execute()
 	engine.setViewTransition({0,0,-7},0,{0,1,0});
 
 	while(engine.drawNextFrame()) {
-		engine.setViewTransition({0,0,0},0.5,{0,1,0});
+		engine.setViewTransition({0,0,0},0.2,{0,1,0});
 		mainWidget.update();
     }
 }

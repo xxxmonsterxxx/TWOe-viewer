@@ -15,7 +15,14 @@ public:
 	static void initUnitGeometry();
 	virtual GameObject initGameObject() = 0;
 
+	void setPosition(SGEPosition newPos) { _position = newPos; }
+	SGEPosition getPosition() { return _position; }
+
 protected:
+
+	static uint16_t _number; //count of units
+	uint16_t _num; // number of instance
+
 	glm::vec3 _symAxis; // symetric axes
 	SGEPosition _position;
 
@@ -23,7 +30,7 @@ protected:
 	static Mesh* _cylindMesh;
 };
 
-class Atom : Unit {
+class Atom : public Unit {
 public:
 	struct atomInfo {
 		std::string name;
@@ -35,12 +42,11 @@ public:
 		return Atom(name,_number++);
 	}
 
-	void setPosition(SGEPosition newPos) { _position = newPos; }
-
 	GameObject initGameObject() override {
 		GameObject newGO("Atom" + _info.name + std::to_string(_num), *_sphereMesh);
 		newGO.setPosition(_position);
-		newGO.setScale(_info.radius*0.1f);
+		glm::vec3 scale = {_info.radius,_info.radius,_info.radius};
+		newGO.setScale(scale*0.1f);
 		newGO.setColor(_info.color);
 		return newGO;
 	}
@@ -54,10 +60,6 @@ private:
 		findAtomInfo(name);
 	}
 
-	static uint16_t _number; //count of atoms
-
-	uint16_t _num; // number of atom
-
 	void findAtomInfo(std::string name) {
 		for (size_t i = 0; i < atomInfos.size(); i++)
 			if (name == atomInfos[i].name)
@@ -68,29 +70,23 @@ private:
 
 };
 
-class MolekularLink : Unit {
+class MolekularLink : public Unit {
 
 public:
 	MolekularLink& operator= (const MolekularLink& b) { this->_begin=b._begin; this->_end = b._end; return *this; }
 
-	GameObject initGameObject() override {
-		return GameObject("Molekular link" + std::to_string(_number), *_cylindMesh);
-	}
+	GameObject initGameObject() override;
 
-	static MolekularLink createNewLinkInstance(glm::vec3 begin, glm::vec3 end) {
-		_number++;
-		return MolekularLink(begin, end);
+	static MolekularLink createNewLinkInstance(SGEPosition begin, SGEPosition end) {
+		return MolekularLink(begin, end, _number++);
 	}
 
 private:
 
-	MolekularLink(glm::vec3 begin, glm::vec3 end) { _begin = begin; _end = end; }
+	MolekularLink(SGEPosition begin, SGEPosition end, uint8_t num) { _begin = begin; _end = end; _num = num; }
 
-	static uint16_t _number;
-
-	glm::vec3 _begin;
-	glm::vec3 _end;
-
+	SGEPosition _begin;
+	SGEPosition _end;
 };
 
 
