@@ -4,17 +4,15 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/Users/michael-pro/Programming/Library/VulkanSDK/1.2.176.1/macOS/include",
-                "/usr/local/Cellar/glfw/HEAD-6876cf8/include/",
-                "/Users/michael-pro/Programming/Library/SGE/0.2.0/include",
-                "/Users/michael-pro/Programming/Library/SGR/0.6.0/include"
+                "/usr/local/include/SGE/**",
+                "/usr/local/include/GLFW/**"
             ],
             "defines": [],
             "macFrameworkPath": [],
-            "compilerPath": "/usr/local/bin/arm-none-eabi-gcc",
+            "compilerPath": "/usr/local/bin/g++",
             "cStandard": "gnu17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "macos-gcc-arm"
+            "intelliSenseMode": "macos-gcc-x64"
         }
     ],
     "version": 4

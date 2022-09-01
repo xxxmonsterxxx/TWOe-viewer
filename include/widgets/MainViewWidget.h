@@ -3,7 +3,7 @@
 #include "ViewWidget.h"
 #include "TwoeUnits.h"
 
-#include "utils.h"
+#include "SGR/utils.h"
 
 class MainViewWidget : public ViewWidget {
 public:
@@ -17,7 +17,7 @@ public:
 private:
 
 	static MainViewWidget* singleton;
-	MainViewWidget() {;}
+	MainViewWidget();
 	~MainViewWidget() {;}
 
 	const std::vector<SGEPosition> rectVertices{
@@ -30,7 +30,7 @@ private:
     const std::vector<uint16_t> rectIndices{0,1,2,2,3,0};
     Mesh rectangleMesh{"rectangle", rectVertices, rectIndices};
 
-	std::string backgroundTexture = getExecutablePath() + "/Resources/Textures/glass.jpeg";
+	std::string backgroundTexture;
 	GameObject background{"Background", rectangleMesh, backgroundTexture};
 
 	Molekule* _molekule;

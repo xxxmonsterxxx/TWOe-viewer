@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <SGE.h>
+#include <SGE/SGE.h>
 #include "glm/glm.hpp"
 
 class Unit {

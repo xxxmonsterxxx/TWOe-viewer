@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SGE.h>
+#include <SGE/SGE.h>
 
 void initVertexDataSphere(std::vector<SGEPosition>& vertices, std::vector<uint16_t>& indices)
 {

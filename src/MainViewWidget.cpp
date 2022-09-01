@@ -3,6 +3,11 @@
 
 MainViewWidget* MainViewWidget::singleton = nullptr;
 
+MainViewWidget::MainViewWidget()
+{
+	backgroundTexture = _engine->getExecPath() + "/Resources/Textures/glass.jpeg";
+}
+
 MainViewWidget& MainViewWidget::get()
 {
 	if (!singleton) {
@@ -26,8 +31,8 @@ void MainViewWidget::init(SGE* engine)
 
 bool MainViewWidget::loadMolekule()
 {
-	std::string wfnPath = getExecutablePath() + "/Resources/Test data/test.wfn";
-	std::string cptPath = getExecutablePath() + "/Resources/Test data/test.cpt";
+	std::string wfnPath = _engine->getExecPath() + "/Resources/Test data/test2.wfn";
+	std::string cptPath = _engine->getExecPath() + "/Resources/Test data/test2.cpt";
 
 	DataLoader::loadData(wfnPath, cptPath);
 

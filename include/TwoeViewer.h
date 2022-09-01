@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SGE.h>
+#include <SGE/SGE.h>
 
 #include "widgets/MainViewWidget.h"
 
