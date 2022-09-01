@@ -17,6 +17,13 @@ TwoeViewer& TwoeViewer::get()
 bool TwoeViewer::init()
 {
 	mainWidget.init(&engine);
+	cameraView.init(&engine);
+
+	engine.mouseEventSubscribe(GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS, cameraView.moveCallback);
+	engine.mouseEventSubscribe(GLFW_MOUSE_BUTTON_LEFT, GLFW_RELEASE, cameraView.moveCallback);
+
+	engine.keyEventSubscribe(GLFW_KEY_SPACE, GLFW_RELEASE, cameraView.keyCallback);
+
 
 	return true;
 }
@@ -37,10 +44,10 @@ void TwoeViewer::execute()
 	if (!engine.init(800,800,"TWOe-Viewer")) // SGE init
 		return;
 
-	engine.setViewTransition({0,0,-7},0,{0,1,0});
+	cameraView.move({0,0,-12});
 
 	while(engine.drawNextFrame()) {
-		engine.setViewTransition({0,0,0},0.2,{0,1,0});
+		cameraView.moveUpdate();
 		mainWidget.update();
     }
 }
