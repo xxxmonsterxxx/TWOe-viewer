@@ -13,9 +13,27 @@ CameraView& CameraView::get()
 	}
 }
 
-void CameraView::init(SGE* engine)
+void CameraView::init(SGE* engine, glm::vec3 defaultPos, glm::vec3 defaultRot)
 {
 	_engine = engine;
+
+	setDefaultView(defaultPos, defaultRot);
+
+	setDefaultView();
+}
+
+void CameraView::setDefaultView(glm::vec3 defaultPos, glm::vec3 defaultRot)
+{
+	_defaultPos = defaultPos;
+	_defaultRot = defaultRot;
+}
+
+void CameraView::setDefaultView()
+{
+	move(_defaultPos - position);
+	position = _defaultPos;
+	rotate(_defaultRot - rotation);
+	rotation = _defaultRot;
 }
 
 void CameraView::rotateX(float angle)
@@ -27,16 +45,16 @@ void CameraView::rotateX(float angle)
 
 void CameraView::rotateY(float angle)
 {
-	_engine->setViewTransition({0,0,0},angle,{0,1,0});
-	glm::vec3 deltaRotation{0,angle,0};
-	rotation += deltaRotation;
+	// _engine->setViewTransition({0,0,0},angle,{0,1,0});
+	// glm::vec3 deltaRotation{0,angle,0};
+	// rotation += deltaRotation;
 }
 
 void CameraView::rotateZ(float angle)
 {
-	_engine->setViewTransition({0,0,0},angle,{0,0,1});
-	glm::vec3 deltaRotation{0,0,angle};
-	rotation += deltaRotation;
+	// _engine->setViewTransition({0,0,0},angle,{0,0,1});
+	// glm::vec3 deltaRotation{0,0,angle};
+	// rotation += deltaRotation;
 }
 
 
@@ -102,4 +120,11 @@ void CameraView::move(glm::vec3 deltaPos)
 {
 	position += deltaPos;
 	_engine->setViewTransition(deltaPos);
+}
+
+void CameraView::rotate(glm::vec3 deltaRot)
+{
+	rotateX(deltaRot.x);
+	rotateY(deltaRot.y);
+	rotateZ(deltaRot.z);
 }

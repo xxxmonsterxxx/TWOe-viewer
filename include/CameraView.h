@@ -20,12 +20,18 @@ private:
 
 	bool inMoving = false;
 	SGE* _engine;
+
+	glm::vec3 _defaultPos;
+	glm::vec3 _defaultRot;
 public:
 
 	static CameraView& get();
 
-	void init(SGE* engine);
+	void init(SGE* engine, glm::vec3 defaultPos={0,0,0}, glm::vec3 defaultRot={0,0,0});
+	void setDefaultView(glm::vec3 defaultPos, glm::vec3 defaultRot);
+	void setDefaultView();
 
+	void rotate(glm::vec3 deltaRot);
 	void rotateX(float angle);
 	void rotateY(float angle);
 	void rotateZ(float angle);
