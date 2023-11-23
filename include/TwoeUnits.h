@@ -51,6 +51,14 @@ public:
 		return newGO;
 	}
 
+	TextObject initLabel() {
+		TextObject label(_info.name + std::to_string(_num));
+		
+		label.setPosition({_position.x,_position.y,_position.z+_info.radius*0.1f});
+		// label.setScale({3,3,1});
+		return label;
+	}
+
 	Atom& operator= (const Atom& b) { this->findAtomInfo(b._info.name); return *this; }
 
 private:
@@ -94,18 +102,19 @@ class Molekule {
 
 public:
 	Molekule() {;}
-	Molekule(std::vector<Atom> atoms, std::vector<MolekularLink> links) {
-		_atoms = atoms;
-		_links = links;
-
-		initGameObjects();
-	}
+	Molekule(std::vector<Atom> atoms, std::vector<MolekularLink> links);
 
 	std::vector<GameObject> _gameObjects;
+	std::vector<TextObject> _labels;
+
+	void rotate(float angleX, float angleY, float angleZ);
+	void move(glm::vec3 deltaPos);
 
 private:
 	std::vector<Atom> _atoms;
 	std::vector<MolekularLink> _links;
+
+	glm::vec3 _rotation;
 
 	void initGameObjects();
 };
