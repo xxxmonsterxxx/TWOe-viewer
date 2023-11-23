@@ -16,6 +16,13 @@ Mesh* Unit::_sphereMesh = nullptr;
 Mesh* Unit::_cylindMesh = nullptr;
 uint16_t Unit::_number = 0;
 
+Molekule::Molekule(std::vector<Atom> atoms, std::vector<MolekularLink> links) {
+	_atoms = atoms;
+	_links = links;
+
+	initGameObjects();
+}
+
 void Unit::initUnitGeometry()
 {
 	static std::vector<SGEPosition> vertices;
@@ -54,9 +61,17 @@ GameObject MolekularLink::initGameObject()
 
 void Molekule::initGameObjects()
 {
-	for (size_t i = 0; i < _atoms.size(); i++)
+	for (size_t i = 0; i < _atoms.size(); i++) {
 		_gameObjects.push_back(_atoms[i].initGameObject());
+		_labels.push_back(_atoms[i].initLabel());
+	}
 
 	for (size_t i = 0; i < _links.size(); i++)
 		_gameObjects.push_back(_links[i].initGameObject());
+}
+
+void Molekule::rotate(float angleX, float angleY, float angleZ)
+{
+	glm::vec3 deltaRotation{angleX, angleY, angleZ};
+	_rotation += deltaRotation;
 }

@@ -2,8 +2,7 @@
 
 #include "ViewWidget.h"
 #include "TwoeUnits.h"
-
-#include "SGR/utils.h"
+#include "MolekuleManager.h"
 
 class MainViewWidget : public ViewWidget {
 public:
@@ -33,7 +32,7 @@ private:
 	std::string backgroundTexture;
 	GameObject background{"Background", rectangleMesh, backgroundTexture};
 
-	Molekule* _molekule;
+	MolekuleManager& molekuleManager = MolekuleManager::get();
 
 	void addMolekuleToRender();
 };

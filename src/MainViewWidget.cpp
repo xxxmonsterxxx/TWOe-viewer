@@ -39,7 +39,9 @@ bool MainViewWidget::loadMolekule()
 	if (DataLoader::_atoms.empty() || DataLoader::_links.empty())
 		return false;
 
-	_molekule = new Molekule(DataLoader::_atoms,DataLoader::_links);
+	Molekule* molekule = new Molekule(DataLoader::_atoms,DataLoader::_links);
+
+	molekuleManager.setLoadedMolekule(molekule);
 
 	addMolekuleToRender();
 
@@ -48,11 +50,18 @@ bool MainViewWidget::loadMolekule()
 
 void MainViewWidget::addMolekuleToRender()
 {
-	for (size_t i = 0; i < _molekule->_gameObjects.size(); i++) {
-		_engine->addToRender(_molekule->_gameObjects[i]);
+	Molekule* molekuleToDraw = molekuleManager.getLoadedMolekule();
+
+	for (size_t i = 0; i < molekuleToDraw->_gameObjects.size(); i++) {
+		_engine->addToRender(molekuleToDraw->_gameObjects[i]);
+	}
+
+	for (size_t i = 0; i < molekuleToDraw->_labels.size(); i++) {
+		_engine->addToRender(molekuleToDraw->_labels[i]);
 	}
 }
 
 void MainViewWidget::update()
 {
+	molekuleManager.update();
 }
