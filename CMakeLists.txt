@@ -20,11 +20,12 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 set(GLM_INC_DIR modules/glm)
 
 find_path(SGR_INC_DIR SGR/SGR.h)
+find_package(Vulkan REQUIRED)
 
 find_library(SGE_LIB SGE)
 find_path(SGE_INC_DIR SGE/SGE.h)
 
-include_directories(${SGE_INC_DIR} ${SGR_INC_DIR} ${GLM_INC_DIR})
+include_directories(${Vulkan_INCLUDE_DIRS} ${SGE_INC_DIR} ${SGR_INC_DIR} ${GLM_INC_DIR})
 target_link_libraries (${PROJECT_NAME} ${SGE_LIB})
 
 file(COPY Resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
