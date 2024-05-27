@@ -110,7 +110,6 @@ void DataLoader::readBonds(std::ifstream& inp)
 			   tmp >> tmp >> y >> 
 			   tmp >> tmp >> z;
 		MolekularLink newLink = MolekularLink::createNewLinkInstance(_atoms[inda-1].getPosition(), _atoms[indb-1].getPosition());
-		newLink.setPosition({x,y,z});
 		_links.push_back(newLink);
 
 		for (int j = 0; j < 6; j++)

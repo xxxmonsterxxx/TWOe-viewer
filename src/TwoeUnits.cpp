@@ -47,14 +47,15 @@ GameObject MolekularLink::initGameObject()
 	glm::vec3 direction = glm::normalize(l);
 	glm::vec3 center = b + direction*(glm::length(l)*0.5f);
 
-	newGO.setPosition({center.x,center.y,center.z});
+	newGO.setPosition(center);
 
-	glm::vec3 axis = glm::cross(glm::vec3(1,0,0), l); // axis is perpendicular to ({1,0,0} and link vector)
+	glm::vec3 axis = glm::normalize(glm::cross(glm::vec3(1,0,0), l)); // axis is perpendicular to ({1,0,0} and link vector)
+	float angle = glm::degrees(glm::acos(direction.x)); // direction.x is cos beetween {1,0,0} and link vector
 	if (glm::length(axis) != 0) {
-		newGO.setRotation(axis,glm::degrees(glm::acos(direction.x))); // direction.x is cos beetween {1,0,0} and link vector
+		newGO.rotate(center, center+axis, angle);
 	}
 
-	newGO.setScale({2,0.05,0.05});
+	newGO.setScale({glm::length(l),0.05,0.05});
 	newGO.setColor({0,0,1});
 	return newGO;
 }
