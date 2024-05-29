@@ -54,8 +54,7 @@ public:
 	TextObject initLabel() {
 		TextObject label(_info.name + std::to_string(_num));
 		
-		label.setPosition({_position.x,_position.y,_position.z+_info.radius*0.1f});
-		// label.setScale({3,3,1});
+		label.setPosition({_position.x,_position.y,_position.z+_info.radius*0.2f});
 		return label;
 	}
 
@@ -113,8 +112,6 @@ public:
 private:
 	std::vector<Atom> _atoms;
 	std::vector<MolekularLink> _links;
-
-	glm::vec3 _rotation;
 
 	void initGameObjects();
 };

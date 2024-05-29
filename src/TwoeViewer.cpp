@@ -26,13 +26,8 @@ void TwoeViewer::keyCallback(int key, int scancode, int action, int mods)
 bool TwoeViewer::init()
 {
 	mainWidget.init(&engine);
-	cameraView.init(&engine, {0,0,-12});
 
-	// camera options
-	// engine.mouseEventSubscribe(GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS, cameraView.moveCallback);
-	// engine.mouseEventSubscribe(GLFW_MOUSE_BUTTON_LEFT, GLFW_RELEASE, cameraView.moveCallback);
-	// engine.keyEventSubscribe(GLFW_KEY_SPACE, GLFW_RELEASE, cameraView.keyCallback);
-
+	engine.setMaxInstanceNumber(500);
 	engine.keyEventSubscribe(GLFW_KEY_ESCAPE, GLFW_RELEASE, keyCallback);
 
 	_exit = false;
@@ -58,7 +53,6 @@ void TwoeViewer::execute()
 
 	bool engineWorks = engine.drawNextFrame();
 	while(engineWorks && !_exit) {
-		cameraView.moveUpdate();
 		mainWidget.update();
 		engineWorks = engine.drawNextFrame();
     }

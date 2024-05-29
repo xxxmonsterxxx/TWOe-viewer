@@ -29,12 +29,12 @@ void Unit::initUnitGeometry()
 	static std::vector<uint16_t>	indices;
 	
 	initVertexDataSphere(vertices, indices);
-	_sphereMesh = new Mesh("Sphere", vertices, indices, true);
+	_sphereMesh = new Mesh("Sphere", vertices, indices, false);
 
 	vertices.clear();
 	indices.clear();
 	initVertexDataCylinder(vertices, indices);
-	_cylindMesh = new Mesh("Cylinder", vertices, indices, true);
+	_cylindMesh = new Mesh("Cylinder", vertices, indices, false);
 }
 
 GameObject MolekularLink::initGameObject()
@@ -73,6 +73,29 @@ void Molekule::initGameObjects()
 
 void Molekule::rotate(float angleX, float angleY, float angleZ)
 {
-	glm::vec3 deltaRotation{angleX, angleY, angleZ};
-	_rotation += deltaRotation;
+	for (size_t i = 0; i < _gameObjects.size(); i++)
+		_gameObjects[i].rotate({0,0,0},{1,0,0},angleX);
+
+	for (size_t i = 0; i < _gameObjects.size(); i++)
+		_gameObjects[i].rotate({0,0,0},{0,1,0},angleY);
+
+	for (size_t i = 0; i < _labels.size(); i++) {
+		_labels[i].rotate({0,0,0},{1,0,0},angleX);
+		_labels[i].setRotation({0,0,0});
+	}
+
+	for (size_t i = 0; i < _labels.size(); i++) {
+		_labels[i].rotate({0,0,0},{0,1,0},angleY);
+		_labels[i].setRotation({0,0,0});
+	}
+}
+
+void Molekule::move(glm::vec3 deltaPos)
+{
+	for (size_t i = 0; i < _gameObjects.size(); i++)
+		_gameObjects[i].move(deltaPos);
+
+	for (size_t i = 0; i < _labels.size(); i++) {
+		_labels[i].move(deltaPos);
+	}
 }

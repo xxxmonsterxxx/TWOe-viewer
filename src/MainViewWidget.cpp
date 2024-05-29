@@ -25,6 +25,9 @@ void MainViewWidget::init(SGE* engine)
 	background.setScale({60,60,60});
 	background.setPosition({0,0,-50});
 	// _engine->addToRender(background);
+	_engine->setViewTransition({0,0,-15});
+
+	molekuleManager.init();
 
 	Unit::initUnitGeometry();
 }
