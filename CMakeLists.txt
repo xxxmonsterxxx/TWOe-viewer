@@ -19,14 +19,16 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 set(GLM_INC_DIR modules/glm)
 
-find_path(SGR_INC_DIR SGR/SGR.h)
 find_package(Vulkan REQUIRED)
+find_package(SGR 0.9.1 EXACT)
+find_package(SGE 0.5.1 EXACT)
 
-find_library(SGE_LIB SGE)
-find_path(SGE_INC_DIR SGE/SGE.h)
+find_package(glfw3 3.3 REQUIRED)
+get_target_property(GLFW3_INCLUDE_DIRS glfw INTERFACE_INCLUDE_DIRECTORIES)
+include_directories(${GLFW3_INCLUDE_DIRS}/GLFW)
 
-include_directories(${Vulkan_INCLUDE_DIRS} ${SGE_INC_DIR} ${SGR_INC_DIR} ${GLM_INC_DIR})
-target_link_libraries (${PROJECT_NAME} ${SGE_LIB})
+include_directories(${Vulkan_INCLUDE_DIRS} ${SGE_INCLUDE_DIRS} ${SGR_INCLUDE_DIRS} ${GLM_INC_DIR})
+target_link_libraries (${PROJECT_NAME} ${SGE_LIBRARIES} glfw)
 
 file(COPY Resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 

@@ -24,7 +24,7 @@ void MainViewWidget::init(SGE* engine)
 
 	background.setScale({60,60,60});
 	background.setPosition({0,0,-50});
-	// _engine->addToRender(background);
+	//_engine->registerGameObject(background);
 	_engine->setViewTransition({0,0,-15});
 
 	molekuleManager.init();
@@ -56,11 +56,11 @@ void MainViewWidget::addMolekuleToRender()
 	Molekule* molekuleToDraw = molekuleManager.getLoadedMolekule();
 
 	for (size_t i = 0; i < molekuleToDraw->_gameObjects.size(); i++) {
-		_engine->addToRender(molekuleToDraw->_gameObjects[i]);
+		_engine->registerGameObject(molekuleToDraw->_gameObjects[i]);
 	}
 
 	for (size_t i = 0; i < molekuleToDraw->_labels.size(); i++) {
-		_engine->addToRender(molekuleToDraw->_labels[i]);
+		_engine->registerGameObject(molekuleToDraw->_labels[i]);
 	}
 }
 

@@ -1,4 +1,4 @@
-#include <SGE/SGE.h>
+#include <SGE.h>
 
 class ViewWidget {
 

@@ -10,8 +10,10 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+
 # Visual Studio directory
 .vs/
+.vscode/
 
 # CMake system
 CMakeFiles/

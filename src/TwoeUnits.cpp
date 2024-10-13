@@ -73,6 +73,8 @@ void Molekule::initGameObjects()
 
 void Molekule::rotate(float angleX, float angleY, float angleZ)
 {
+	rotation+=glm::vec3{angleX,angleY,angleZ};
+
 	for (size_t i = 0; i < _gameObjects.size(); i++)
 		_gameObjects[i].rotate({0,0,0},{1,0,0},angleX);
 
@@ -81,12 +83,12 @@ void Molekule::rotate(float angleX, float angleY, float angleZ)
 
 	for (size_t i = 0; i < _labels.size(); i++) {
 		_labels[i].rotate({0,0,0},{1,0,0},angleX);
-		_labels[i].setRotation({0,0,0});
+		_labels[i].setRotation({180,0,0});
 	}
 
 	for (size_t i = 0; i < _labels.size(); i++) {
 		_labels[i].rotate({0,0,0},{0,1,0},angleY);
-		_labels[i].setRotation({0,0,0});
+		_labels[i].setRotation({180,0,0});
 	}
 }
 

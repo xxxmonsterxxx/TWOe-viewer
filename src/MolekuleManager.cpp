@@ -42,8 +42,7 @@ void MolekuleManager::updateRotation()
 	if (_inRotation) {
 		glm::vec2 currMousePos = _engine.getCursorPos();
 		glm::vec2 deltaMousePos = currMousePos - _prevMousePos;
-		deltaMousePos.y *= -1.f; // right is CCW
-		_loadedMolekule->rotate(deltaMousePos.y, deltaMousePos.x, 0);
+		_loadedMolekule->rotate(-deltaMousePos.y, -deltaMousePos.x, 0);
 		_prevMousePos = currMousePos;
 	}
 }
@@ -53,15 +52,14 @@ void MolekuleManager::updateMoving()
 	if (_inMoving) {
 		glm::vec2 currMousePos = _engine.getCursorPos();
 		glm::vec2 deltaMousePos = currMousePos - _prevMousePos;
-		deltaMousePos.y *= -1.f; // right is CCW
-		_loadedMolekule->move({deltaMousePos.x*0.01f, -deltaMousePos.y*0.01f, 0});
+		camera.move({0,0,0},{-deltaMousePos.x*0.01f, -deltaMousePos.y*0.01f, 0});
 		_prevMousePos = currMousePos;
 	}
 
 	if (_zooming > 0)
-		_loadedMolekule->move({0, 0, 0.1f});
+		camera.move({0,0,0},{0, 0, 0.1});
 	else if (_zooming < 0)
-		_loadedMolekule->move({0, 0, -0.1f});
+		camera.move({0,0,0},{0, 0, -0.1});
 }
 
 void MolekuleManager::update()
@@ -91,28 +89,37 @@ void MolekuleManager::mouseCallback(int button, int action, int mods)
 	}
 }
 
+void MolekuleManager::reset()
+{
+	camera.reset();
+}
+
 void MolekuleManager::keyCallback(int key, int scancode, int action, int mods)
 {
 	MolekuleManager& mm = MolekuleManager::get();
 
-	if (key == GLFW_KEY_W) {
-		if (action == GLFW_PRESS) {
-			mm.zoom(1);
-		}
-		if (action == GLFW_RELEASE) {
-			mm.zoom(0);
-		}
-	}
+	switch (key) {
+		case GLFW_KEY_W:
+			if (action == GLFW_PRESS) {
+				mm.zoom(1);
+			}
+			if (action == GLFW_RELEASE) {
+				mm.zoom(0);
+			}
+			break;
+		case GLFW_KEY_S:
+			if (action == GLFW_PRESS) {
+				mm.zoom(-1);
+			}
+			if (action == GLFW_RELEASE) {
+				mm.zoom(0);
 
-	if (key == GLFW_KEY_S) {
-		if (action == GLFW_PRESS) {
-			mm.zoom(-1);
-		}
-		if (action == GLFW_RELEASE) {
-			mm.zoom(0);
-		}
-	}
-	
+			}
+			break;
+		case GLFW_KEY_SPACE:
+				mm.reset();
+			break;
+	}	
 }
 
 void MolekuleManager::init()
@@ -126,6 +133,8 @@ void MolekuleManager::init()
 	_engine.keyEventSubscribe(GLFW_KEY_W, GLFW_RELEASE, keyCallback);
 	_engine.keyEventSubscribe(GLFW_KEY_S, GLFW_PRESS, keyCallback);
 	_engine.keyEventSubscribe(GLFW_KEY_S, GLFW_RELEASE, keyCallback);
+
+	_engine.keyEventSubscribe(GLFW_KEY_SPACE, GLFW_RELEASE, keyCallback);
 }
 
 void MolekuleManager::setLoadedMolekule(Molekule* m)

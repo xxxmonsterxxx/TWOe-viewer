@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SGE/SGE.h>
+#include <SGE.h>
 
 void initVertexDataCylinder(std::vector<SGEPosition>& vertices, std::vector<uint16_t>& indices)
 {

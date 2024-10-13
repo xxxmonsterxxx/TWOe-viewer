@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <SGE/SGE.h>
+#include <SGE.h>
 #include "glm/glm.hpp"
 
 class Unit {
@@ -54,6 +54,7 @@ public:
 	TextObject initLabel() {
 		TextObject label(_info.name + std::to_string(_num));
 		
+		label.rotate({180,0,0});
 		label.setPosition({_position.x,_position.y,_position.z+_info.radius*0.2f});
 		return label;
 	}
@@ -110,6 +111,8 @@ public:
 	void move(glm::vec3 deltaPos);
 
 private:
+	glm::vec3 rotation{0,0,0};
+
 	std::vector<Atom> _atoms;
 	std::vector<MolekularLink> _links;
 

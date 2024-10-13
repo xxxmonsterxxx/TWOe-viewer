@@ -17,6 +17,7 @@ private:
 	static MolekuleManager* _singleton;
 
 	SGE& _engine = SGE::get();
+	CameraObject& camera = _engine.getCameraObject();
 
 	Molekule* _loadedMolekule;
 
@@ -31,6 +32,8 @@ private:
 
 	void updateRotation();
 	void updateMoving();
+
+	void reset();
 
 	// handle mouse actions
 	glm::vec2 _prevMousePos;
