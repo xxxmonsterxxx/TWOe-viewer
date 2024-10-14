@@ -3,11 +3,6 @@
 
 MainViewWidget* MainViewWidget::singleton = nullptr;
 
-MainViewWidget::MainViewWidget()
-{
-	backgroundTexture = _engine->getExecPath() + "/Resources/Textures/glass.jpeg";
-}
-
 MainViewWidget& MainViewWidget::get()
 {
 	if (!singleton) {
@@ -22,10 +17,25 @@ void MainViewWidget::init(SGE* engine)
 	name = "Main widget";
 	_engine = engine;
 
-	background.setScale({60,60,60});
-	background.setPosition({0,0,-50});
-	//_engine->registerGameObject(background);
-	_engine->setViewTransition({0,0,-15});
+	_engine->registerGameObject(background1);
+	background1.scale(20);
+	background1.move({0,0,10});
+	background1.rotate({0,0,0},{1,0,0},-90);
+	_engine->registerGameObject(background2);
+	background2.scale(20);
+	background2.move({0,0,10});
+	background2.rotate({0,0,0},{1,0,0},90);
+	_engine->registerGameObject(background3);
+	background3.scale(20);
+	background3.move({0,0,10});
+	background3.rotate({0,0,0},{0,1,0},90);
+	_engine->registerGameObject(background4);
+	background4.scale(20);
+	background4.move({0,0,10});
+	background4.rotate({0,0,0},{0,1,0},-90);
+	_engine->registerGameObject(background5);
+	background5.scale(20);
+	background5.move({0,0,10});
 
 	molekuleManager.init();
 

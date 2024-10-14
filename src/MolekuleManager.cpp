@@ -49,23 +49,29 @@ void MolekuleManager::updateRotation()
 
 void MolekuleManager::updateMoving()
 {
+	glm::vec3 cameraPos = _engine.getCameraObject().getPosition();
 	if (_inMoving) {
 		glm::vec2 currMousePos = _engine.getCursorPos();
 		glm::vec2 deltaMousePos = currMousePos - _prevMousePos;
-		camera.move({0,0,0},{-deltaMousePos.x*0.01f, -deltaMousePos.y*0.01f, 0});
+		if (fabsf(cameraPos.x - deltaMousePos.x*0.01f) < _cameraXYLim)
+			camera.move({0,0,0},{-deltaMousePos.x*0.01f, 0, 0});
+		if (fabsf(cameraPos.y - deltaMousePos.y*0.01f) < _cameraXYLim)
+			camera.move({0,0,0},{0, -deltaMousePos.y*0.01f, 0});
 		_prevMousePos = currMousePos;
 	}
 
-	if (_zooming > 0)
+	if (_zooming > 0 && cameraPos.z < _cameraZLim.y)
 		camera.move({0,0,0},{0, 0, 0.1});
-	else if (_zooming < 0)
+	else if (_zooming < 0 && cameraPos.z > _cameraZLim.x)
 		camera.move({0,0,0},{0, 0, -0.1});
 }
 
 void MolekuleManager::update()
 {
-	updateRotation();
-	updateMoving();
+	if (!_hided) {
+		updateRotation();
+		updateMoving();
+	}
 }
 
 void MolekuleManager::mouseCallback(int button, int action, int mods)
@@ -94,6 +100,17 @@ void MolekuleManager::reset()
 	camera.reset();
 }
 
+void MolekuleManager::hide()
+{
+	if (!_hided) {
+		_hided = true;
+		_loadedMolekule->move({0,0,100});
+	} else {
+		_hided = false;
+		_loadedMolekule->move({0,0,-100});
+	}
+}
+
 void MolekuleManager::keyCallback(int key, int scancode, int action, int mods)
 {
 	MolekuleManager& mm = MolekuleManager::get();
@@ -117,7 +134,11 @@ void MolekuleManager::keyCallback(int key, int scancode, int action, int mods)
 			}
 			break;
 		case GLFW_KEY_SPACE:
-				mm.reset();
+			mm.reset();
+			break;
+
+		case GLFW_KEY_H:
+			mm.hide();
 			break;
 	}	
 }
@@ -134,7 +155,12 @@ void MolekuleManager::init()
 	_engine.keyEventSubscribe(GLFW_KEY_S, GLFW_PRESS, keyCallback);
 	_engine.keyEventSubscribe(GLFW_KEY_S, GLFW_RELEASE, keyCallback);
 
+	_engine.keyEventSubscribe(GLFW_KEY_H, GLFW_RELEASE, keyCallback);
+
 	_engine.keyEventSubscribe(GLFW_KEY_SPACE, GLFW_RELEASE, keyCallback);
+
+	camera.setDefaultPos({0,0,10});
+	camera.reset();
 }
 
 void MolekuleManager::setLoadedMolekule(Molekule* m)

@@ -16,6 +16,9 @@ public:
 private:
 	static MolekuleManager* _singleton;
 
+	glm::vec2 _cameraZLim{-5,20};
+	float _cameraXYLim = 4;
+
 	SGE& _engine = SGE::get();
 	CameraObject& camera = _engine.getCameraObject();
 
@@ -25,10 +28,12 @@ private:
 	bool _inRotation = false;
 	bool _inMoving = false;
 	int _zooming = 0;
+	bool _hided = false;
 
 	void setInRotation(bool inRotation);
 	void setInMoving(bool inMoving);
 	void zoom(int z);
+	void hide();
 
 	void updateRotation();
 	void updateMoving();
