@@ -1,5 +1,6 @@
 #include "widgets/MainViewWidget.h"
 #include "DataLoader.h"
+#include "tinyfiledialogs.h"
 
 MainViewWidget* MainViewWidget::singleton = nullptr;
 
@@ -44,8 +45,19 @@ void MainViewWidget::init(SGE* engine)
 
 bool MainViewWidget::loadMolekule()
 {
-	std::string wfnPath = _engine->getExecPath() + "/Resources/Test data/test2.wfn";
-	std::string cptPath = _engine->getExecPath() + "/Resources/Test data/test2.cpt";
+	std::string resourcesPath = _engine->getExecPath()+"/Resources/Test data/";
+	const char *filters[2] = { "*.wfn" };
+    const char *filePath = tinyfd_openFileDialog(
+        "Choose molekule file",
+        resourcesPath.c_str(),
+        1,
+        filters,
+        "Molekule data files",
+        0 
+    );
+
+	std::string wfnPath(filePath);
+	std::string cptPath = wfnPath.substr(0, wfnPath.size() - 4) + ".cpt";
 
 	DataLoader::loadData(wfnPath, cptPath);
 
