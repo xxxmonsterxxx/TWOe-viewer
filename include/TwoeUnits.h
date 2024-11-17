@@ -98,6 +98,41 @@ private:
 };
 
 
+class CriticalPoint : public Unit {
+
+public:
+
+	GameObject initGameObject() override {
+		GameObject newGO("cp"+std::to_string(_num), *_sphereMesh);
+		newGO.scale(radius);
+		newGO.setPosition(_position);
+		newGO.setColor(_color);
+		return newGO;
+	}
+
+	enum CriticalType {
+		RING,
+		CAGE
+	};
+
+	static CriticalPoint createNewCriticalPoint(CriticalType type) {
+		SGEColor col;
+		if (type == RING)
+			col = {0,255,0};
+		else if (type == CAGE)
+			col = {0,0,255};
+		return CriticalPoint(col);
+	}
+
+private:
+
+	SGEColor _color;
+	static constexpr float radius = 0.1;
+
+	CriticalPoint(SGEColor color) : _color(color) { _num = _number++; }
+};
+
+
 class Molekule {
 
 public:
@@ -110,11 +145,15 @@ public:
 	void rotate(float angleX, float angleY, float angleZ);
 	void move(glm::vec3 deltaPos);
 
+	void setCritPoints(std::vector<CriticalPoint> ccp, std::vector<CriticalPoint> rcp);
+
 private:
 	glm::vec3 rotation{0,0,0};
 
 	std::vector<Atom> _atoms;
 	std::vector<MolekularLink> _links;
+	std::vector<CriticalPoint> _ccp;
+	std::vector<CriticalPoint> _rcp;
 
 	void initGameObjects();
 };

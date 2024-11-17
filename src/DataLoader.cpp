@@ -5,6 +5,8 @@
 std::string DataLoader::_molekuleName;
 std::vector<Atom> DataLoader::_atoms;
 std::vector<MolekularLink> DataLoader::_links;
+std::vector<CriticalPoint> DataLoader::_rcps;
+std::vector<CriticalPoint> DataLoader::_ccps;
 
 void DataLoader::readMolekuleName(std::ifstream& inp)
 {
@@ -73,10 +75,12 @@ void DataLoader::readAtoms(std::ifstream& inp)
 	}
 }
 
-void DataLoader::readBonds(std::ifstream& inp)
+void DataLoader::readCPT(std::ifstream& inp)
 {
-	uint16_t numOfBonds;
 	std::string tmp;
+	uint16_t numOfBonds;
+	uint16_t numOfRCP;
+	uint16_t numOfCCP;
 
 	while (tmp != "BCPs")
 	{
@@ -84,6 +88,21 @@ void DataLoader::readBonds(std::ifstream& inp)
 		inp >> tmp >> tmp;
 	}
 	inp >> tmp >> numOfBonds;
+
+	getline(inp, tmp);
+	inp >> tmp >> tmp >> tmp >> numOfRCP;
+
+	getline(inp, tmp);
+	inp >> tmp >> tmp >> tmp >> numOfCCP;
+
+	readBonds(inp, numOfBonds);
+	readRCP(inp, numOfRCP);
+	readCCP(inp, numOfCCP);
+}
+
+void DataLoader::readBonds(std::ifstream& inp, uint16_t num)
+{
+	std::string tmp;
 
 	getline(inp, tmp);
 	inp >> tmp >> tmp >> tmp >> tmp;
@@ -97,7 +116,7 @@ void DataLoader::readBonds(std::ifstream& inp)
 	}
 	for (int j = 0; j<3; j++) getline(inp, tmp);
 
-	for (int i = 0; i < numOfBonds; i++)
+	for (int i = 0; i < num; i++)
 	{
 		for (int j = 0; j < 9; j++)
 			inp >> tmp;
@@ -112,8 +131,66 @@ void DataLoader::readBonds(std::ifstream& inp)
 		MolekularLink newLink = MolekularLink::createNewLinkInstance(_atoms[inda-1].getPosition(), _atoms[indb-1].getPosition());
 		_links.push_back(newLink);
 
-		for (int j = 0; j < 6; j++)
-			getline(inp, tmp);
+		if (i < num - 1) {
+			for (int j = 0; j < 6; j++)
+				getline(inp, tmp);
+		}
+	}
+}
+
+void DataLoader::readRCP(std::ifstream& inp, uint16_t num)
+{
+	std::string tmp;
+
+	while (tmp != "RINGS" && !inp.eof())
+	{
+		getline(inp, tmp);
+		for (int i = 0; i < 4; i++) inp >> tmp;
+	}
+	for (int j = 0; j<4; j++) getline(inp, tmp);
+
+	for (int i = 0; i < num; i++)
+	{
+		float x,y,z;
+		inp >> tmp >> tmp >> x >>
+			   tmp >> tmp >> y >> 
+			   tmp >> tmp >> z;
+		CriticalPoint newrcp = CriticalPoint::createNewCriticalPoint(CriticalPoint::RING);
+		newrcp.setPosition({x,y,z});
+		_rcps.push_back(newrcp);
+
+		if (i < num - 1) {
+			for (int j = 0; j < 7; j++)
+				getline(inp, tmp);
+		}
+	}
+}
+
+void DataLoader::readCCP(std::ifstream& inp, uint16_t num)
+{
+	std::string tmp;
+
+	while (tmp != "CAGES" && !inp.eof())
+	{
+		getline(inp, tmp);
+		for (int i = 0; i < 4; i++) inp >> tmp;
+	}
+	for (int j = 0; j<4; j++) getline(inp, tmp);
+
+	for (int i = 0; i < num; i++)
+	{
+		float x,y,z;
+		inp >> tmp >> tmp >> x >>
+			   tmp >> tmp >> y >> 
+			   tmp >> tmp >> z;
+		CriticalPoint newccp = CriticalPoint::createNewCriticalPoint(CriticalPoint::CAGE);
+		newccp.setPosition({x,y,z});
+		_ccps.push_back(newccp);
+
+		if (i < num - 1) {
+			for (int j = 0; j < 7; j++)
+				getline(inp, tmp);
+		}
 	}
 }
 
@@ -134,6 +211,7 @@ void DataLoader::loadData(const std::string wfnPath, const std::string cptPath)
 		std::cout<< "File " <<cptPath.c_str()<<" not found :(";
 		return;
 	}
-	readBonds(inp);
+	readCPT(inp);
+
 	inp.close();
 }

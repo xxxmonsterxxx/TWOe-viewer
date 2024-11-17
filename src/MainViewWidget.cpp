@@ -65,6 +65,7 @@ bool MainViewWidget::loadMolekule()
 		return false;
 
 	Molekule* molekule = new Molekule(DataLoader::_atoms,DataLoader::_links);
+	molekule->setCritPoints(DataLoader::_ccps, DataLoader::_rcps);
 
 	molekuleManager.setLoadedMolekule(molekule);
 
@@ -76,6 +77,8 @@ bool MainViewWidget::loadMolekule()
 void MainViewWidget::addMolekuleToRender()
 {
 	Molekule* molekuleToDraw = molekuleManager.getLoadedMolekule();
+
+	_engine->setMaxInstanceNumber(300);
 
 	for (size_t i = 0; i < molekuleToDraw->_gameObjects.size(); i++) {
 		_engine->registerGameObject(molekuleToDraw->_gameObjects[i]);

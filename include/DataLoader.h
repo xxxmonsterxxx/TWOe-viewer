@@ -12,20 +12,17 @@ public:
 	static std::string _molekuleName;
 	static std::vector<Atom> _atoms;
 	static std::vector<MolekularLink> _links;
-
-	// int numberOfBonds;
-	// bond_cp *bonds;
-
-	// int **map;
-
-	// int nummberOfCCPs;
-	// std::vector <glm::vec3> cage_cp;
-
-	// int nummberOfRCPs;
-	// std::vector <glm::vec3> ring_cp;
+	static std::vector<CriticalPoint> _rcps;
+	static std::vector<CriticalPoint> _ccps;
 
 private:
 	static void readMolekuleName(std::ifstream& inp);
+
 	static void readAtoms(std::ifstream& inp);
-	static void readBonds(std::ifstream& inp);
+
+	static void readCPT(std::ifstream& inp);
+
+	static void readBonds(std::ifstream& inp, uint16_t num);
+	static void readCCP(std::ifstream& inp, uint16_t num);
+	static void readRCP(std::ifstream& inp, uint16_t num);
 };

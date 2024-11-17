@@ -25,6 +25,18 @@ Molekule::Molekule(std::vector<Atom> atoms, std::vector<MolekularLink> links) {
 	initGameObjects();
 }
 
+void Molekule::setCritPoints(std::vector<CriticalPoint> ccp, std::vector<CriticalPoint> rcp)
+{
+	_ccp = ccp;
+	_rcp = rcp;
+
+	for (size_t i = 0; i < _ccp.size(); i++)
+		_gameObjects.push_back(_ccp[i].initGameObject());
+
+	for (size_t i = 0; i < _rcp.size(); i++)
+		_gameObjects.push_back(_rcp[i].initGameObject());
+}
+
 void Unit::initUnitGeometry()
 {
 	static std::vector<SGEPosition> vertices;
