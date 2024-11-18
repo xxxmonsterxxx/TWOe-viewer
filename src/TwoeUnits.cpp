@@ -25,8 +25,9 @@ Molekule::Molekule(std::vector<Atom> atoms, std::vector<MolekularLink> links) {
 	initGameObjects();
 }
 
-void Molekule::setCritPoints(std::vector<CriticalPoint> ccp, std::vector<CriticalPoint> rcp)
+void Molekule::setCritPoints(std::vector<CriticalPoint> ccp, std::vector<CriticalPoint> rcp, std::vector<CriticalPoint> bcp)
 {
+	_bcp = bcp;
 	_ccp = ccp;
 	_rcp = rcp;
 
@@ -35,6 +36,9 @@ void Molekule::setCritPoints(std::vector<CriticalPoint> ccp, std::vector<Critica
 
 	for (size_t i = 0; i < _rcp.size(); i++)
 		_gameObjects.push_back(_rcp[i].initGameObject());
+
+	for (size_t i = 0; i < _bcp.size(); i++)
+		_gameObjects.push_back(_bcp[i].initGameObject());
 }
 
 void Unit::initUnitGeometry()

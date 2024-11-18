@@ -65,7 +65,7 @@ bool MainViewWidget::loadMolekule()
 		return false;
 
 	Molekule* molekule = new Molekule(DataLoader::_atoms,DataLoader::_links);
-	molekule->setCritPoints(DataLoader::_ccps, DataLoader::_rcps);
+	molekule->setCritPoints(DataLoader::_ccps, DataLoader::_rcps, DataLoader::_bcps);
 
 	molekuleManager.setLoadedMolekule(molekule);
 

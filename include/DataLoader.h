@@ -12,6 +12,7 @@ public:
 	static std::string _molekuleName;
 	static std::vector<Atom> _atoms;
 	static std::vector<MolekularLink> _links;
+	static std::vector<CriticalPoint> _bcps;
 	static std::vector<CriticalPoint> _rcps;
 	static std::vector<CriticalPoint> _ccps;
 

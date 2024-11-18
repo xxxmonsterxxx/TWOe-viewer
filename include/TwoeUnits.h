@@ -111,16 +111,19 @@ public:
 	}
 
 	enum CriticalType {
+		BOND,
 		RING,
 		CAGE
 	};
 
 	static CriticalPoint createNewCriticalPoint(CriticalType type) {
 		SGEColor col;
-		if (type == RING)
-			col = {0,255,0};
+		if (type == BOND)
+			col = {255,0,0};
+		else if (type == RING)
+			col = {255,255,0};
 		else if (type == CAGE)
-			col = {0,0,255};
+			col = {0,255,0};
 		return CriticalPoint(col);
 	}
 
@@ -145,13 +148,14 @@ public:
 	void rotate(float angleX, float angleY, float angleZ);
 	void move(glm::vec3 deltaPos);
 
-	void setCritPoints(std::vector<CriticalPoint> ccp, std::vector<CriticalPoint> rcp);
+	void setCritPoints(std::vector<CriticalPoint> ccp, std::vector<CriticalPoint> rcp,  std::vector<CriticalPoint> bcp);
 
 private:
 	glm::vec3 rotation{0,0,0};
 
 	std::vector<Atom> _atoms;
 	std::vector<MolekularLink> _links;
+	std::vector<CriticalPoint> _bcp;
 	std::vector<CriticalPoint> _ccp;
 	std::vector<CriticalPoint> _rcp;
 

@@ -5,6 +5,7 @@
 std::string DataLoader::_molekuleName;
 std::vector<Atom> DataLoader::_atoms;
 std::vector<MolekularLink> DataLoader::_links;
+std::vector<CriticalPoint> DataLoader::_bcps;
 std::vector<CriticalPoint> DataLoader::_rcps;
 std::vector<CriticalPoint> DataLoader::_ccps;
 
@@ -130,6 +131,9 @@ void DataLoader::readBonds(std::ifstream& inp, uint16_t num)
 			   tmp >> tmp >> z;
 		MolekularLink newLink = MolekularLink::createNewLinkInstance(_atoms[inda-1].getPosition(), _atoms[indb-1].getPosition());
 		_links.push_back(newLink);
+		CriticalPoint newbcp = CriticalPoint::createNewCriticalPoint(CriticalPoint::BOND);
+		newbcp.setPosition({x,y,z});
+		_bcps.push_back(newbcp);
 
 		if (i < num - 1) {
 			for (int j = 0; j < 6; j++)
