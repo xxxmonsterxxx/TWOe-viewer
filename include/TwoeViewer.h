@@ -16,7 +16,7 @@ public:
 	static void keyCallback(int key, int scancode, int action, int mods);
 
 private:
-	TwoeViewer() {;}
+	TwoeViewer();
 	~TwoeViewer() {;}
 
 	static TwoeViewer* singleton;

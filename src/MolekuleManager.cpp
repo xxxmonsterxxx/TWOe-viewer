@@ -60,10 +60,10 @@ void MolekuleManager::updateMoving()
 		_prevMousePos = currMousePos;
 	}
 
-	if (_zooming > 0 && cameraPos.z < _cameraZLim.y)
-		camera.move({0,0,0},{0, 0, 0.1});
-	else if (_zooming < 0 && cameraPos.z > _cameraZLim.x)
+	if (_zooming > 0 && cameraPos.z > _cameraZLim.y)
 		camera.move({0,0,0},{0, 0, -0.1});
+	else if (_zooming < 0 && cameraPos.z < _cameraZLim.x)
+		camera.move({0,0,0},{0, 0, 0.1});
 }
 
 void MolekuleManager::update()

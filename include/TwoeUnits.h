@@ -119,11 +119,11 @@ public:
 	static CriticalPoint createNewCriticalPoint(CriticalType type) {
 		SGEColor col;
 		if (type == BOND)
-			col = {255,0,0};
+			col = {255,0,0,255};
 		else if (type == RING)
-			col = {255,255,0};
+			col = {255,255,0,255};
 		else if (type == CAGE)
-			col = {0,255,0};
+			col = {0,255,0,255};
 		return CriticalPoint(col);
 	}
 

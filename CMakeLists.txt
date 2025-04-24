@@ -24,8 +24,8 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 set(GLM_INC_DIR modules/glm)
 
 find_package(Vulkan REQUIRED)
-find_package(SGR 0.9.1)
-find_package(SGE 0.5.1)
+find_package(SGR 0.11.1 EXACT)
+find_package(SGE 0.7.0 EXACT)
 
 find_package(glfw3 3.3 REQUIRED)
 get_target_property(GLFW3_INCLUDE_DIRS glfw INTERFACE_INCLUDE_DIRECTORIES)

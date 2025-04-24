@@ -44,7 +44,7 @@ void Molekule::setCritPoints(std::vector<CriticalPoint> ccp, std::vector<Critica
 void Unit::initUnitGeometry()
 {
 	static std::vector<SGEPosition> vertices;
-	static std::vector<uint16_t>	indices;
+	static std::vector<uint32_t>	indices;
 	
 	initVertexDataSphere(vertices, indices);
 	_sphereMesh = new Mesh("Sphere", vertices, indices, false);

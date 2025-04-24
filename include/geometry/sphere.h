@@ -2,7 +2,7 @@
 
 #include <SGE.h>
 
-void initVertexDataSphere(std::vector<SGEPosition>& vertices, std::vector<uint16_t>& indices)
+void initVertexDataSphere(std::vector<SGEPosition>& vertices, std::vector<uint32_t>& indices)
 {
 	vertices.clear();
 	indices.clear();

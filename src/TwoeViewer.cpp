@@ -4,6 +4,15 @@
 
 TwoeViewer* TwoeViewer::singleton = nullptr;
 
+TwoeViewer::TwoeViewer()
+{
+#if __APPLE__ && !NDBUG
+	engine.setResourcesPath(SGE::getExecPath()+"/../Resources");
+#else
+	engine.setResourcesPath(SGE::getExecPath()+"/Resources");
+#endif
+}
+
 TwoeViewer& TwoeViewer::get()
 {
 	if (!singleton) {

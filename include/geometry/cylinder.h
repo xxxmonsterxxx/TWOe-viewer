@@ -2,7 +2,7 @@
 
 #include <SGE.h>
 
-void initVertexDataCylinder(std::vector<SGEPosition>& vertices, std::vector<uint16_t>& indices)
+void initVertexDataCylinder(std::vector<SGEPosition>& vertices, std::vector<uint32_t>& indices)
 {
 	uint16_t slices = 20, stacks = 20;
 	// Calc The Vertices

@@ -26,10 +26,10 @@ private:
 		{-0.5f,  0.5f, 0.f}
 	};
 
-    const std::vector<uint16_t> rectIndices{0,1,2,2,3,0};
+    const std::vector<uint32_t> rectIndices{0,1,2,2,3,0};
     Mesh rectangleMesh{"rectangle", rectVertices, rectIndices};
 
-	std::string backgroundTexture = "/Resources/Textures/back.jpg";
+	std::string backgroundTexture = "/Textures/back.jpg";
 	GameObject background1{"Background1", rectangleMesh, backgroundTexture};
 	GameObject background2{"Background2", rectangleMesh, backgroundTexture};
 	GameObject background3{"Background3", rectangleMesh, backgroundTexture};

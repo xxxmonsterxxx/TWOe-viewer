@@ -16,7 +16,7 @@ public:
 private:
 	static MolekuleManager* _singleton;
 
-	glm::vec2 _cameraZLim{-5,20};
+	glm::vec2 _cameraZLim{20,-5};
 	float _cameraXYLim = 4;
 
 	SGE& _engine = SGE::get();
