@@ -45,7 +45,7 @@ void MainViewWidget::init(SGE* engine)
 
 bool MainViewWidget::loadMolekule()
 {
-	std::string resourcesPath = _engine->getExecPath()+"/Resources/Test data/";
+	std::string resourcesPath = _engine->getResourcesPath()+"/Test data/";
 	const char *filters[2] = { "*.wfn" };
     const char *filePath = tinyfd_openFileDialog(
         "Choose molekule file",
