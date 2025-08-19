@@ -36,7 +36,7 @@ bool TwoeViewer::init()
 {
 	mainWidget.init(&engine);
 
-	engine.setMaxInstanceNumber(500);
+	engine.setMaxInstanceNumber(1000);
 	engine.keyEventSubscribe(GLFW_KEY_ESCAPE, GLFW_RELEASE, keyCallback);
 
 	_exit = false;

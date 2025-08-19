@@ -7,11 +7,11 @@ project(TWOe-viewer)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++17")
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
 
-add_definitions(-DNDBUG=true)
-set(CMAKE_BUILD_TYPE Release)
+# add_definitions(-DNDBUG=true)
+# set(CMAKE_BUILD_TYPE Release)
     
-# set(CMAKE_BUILD_TYPE RelWithDebInfo)
-# add_definitions(-DNDBUG=false)
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
+add_definitions(-DNDBUG=false)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
 

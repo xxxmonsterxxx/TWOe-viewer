@@ -33,7 +33,7 @@ protected:
 class Atom : public Unit {
 public:
 	struct atomInfo {
-		std::string name;
+		std::string name = "empty";
 		glm::vec3 color;
 		float radius;
 	} _info;
@@ -63,7 +63,7 @@ public:
 
 private:
 
-	Atom(std::string name, uint8_t num) {
+	Atom(std::string name, uint16_t num) {
 		_num = num;
 		findAtomInfo(name);
 	}
@@ -91,7 +91,7 @@ public:
 
 private:
 
-	MolekularLink(SGEPosition begin, SGEPosition end, uint8_t num) { _begin = begin; _end = end; _num = num; }
+	MolekularLink(SGEPosition begin, SGEPosition end, uint16_t num) { _begin = begin; _end = end; _num = num; }
 
 	SGEPosition _begin;
 	SGEPosition _end;

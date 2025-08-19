@@ -78,7 +78,6 @@ void MainViewWidget::addMolekuleToRender()
 {
 	Molekule* molekuleToDraw = molekuleManager.getLoadedMolekule();
 
-	_engine->setMaxInstanceNumber(300);
 
 	for (size_t i = 0; i < molekuleToDraw->_gameObjects.size(); i++) {
 		_engine->registerGameObject(molekuleToDraw->_gameObjects[i]);
